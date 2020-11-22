@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { AlertService } from '../_services/alert.service';
 import { first } from 'rxjs/operators';
+import {User} from '../_models/user';
 
 
 

@@ -47,3 +47,7 @@
 #padding-row{
   padding-top: 5%;
 }
+
+.button-align-right{
+  float: right;
+}

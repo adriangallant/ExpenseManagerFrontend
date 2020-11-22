@@ -1,1 +1,10 @@
-
+#transaction #transaction-row #transaction-column #transaction-box {
+  margin-top: 10%;
+  max-width: 200%;
+  height: 100%;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+#transaction #transaction-row #transaction-column #transaction-box #transaction-form {
+  padding: 2%;
+}

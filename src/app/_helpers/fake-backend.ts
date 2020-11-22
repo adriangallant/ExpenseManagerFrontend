@@ -30,6 +30,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return deleteUser();
         case url.endsWith('/users/updateAccount') && method === 'POST':
           return updateUser();
+        case url.endsWith('/users/checkEmailExistence') && method === 'POST':
+          return checkEmailExistence();
+        case url.endsWith('/users/updatePassword') && method === 'POST':
+          return updatePassword();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -41,7 +45,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     function authenticate() {
       const { username, password } = body;
       const user = users.find(x => x.username === username && x.password === password);
-      if (!user) return error('Username or password is incorrect');
+      if (!user) { return error('Username or password is incorrect'); }
       return ok({
         id: user.id,
         username: user.username,
@@ -57,13 +61,32 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     function updateUser() {
       if (!isLoggedIn()) { return unauthorized(); }
       const updatedUser = body;
-      for (let index in users){
+      for (const index in users){
         if (users[index].id === updatedUser.id) {
           users[index] = updatedUser;
+          break;
         }
       }
       localStorage.setItem('users', JSON.stringify(users));
       return ok();
+    }
+
+    function updatePassword(){
+      const updatedInfo = body;
+      for (const index in users){
+        if (users[index].id === updatedInfo.id) {
+          users[index].password = updatedInfo.newPassword;
+          break;
+        }
+      }
+      localStorage.setItem('users', JSON.stringify(users));
+      return ok();
+    }
+
+    function checkEmailExistence() {
+      const email = body;
+      const foundUser =  users.find(x => x.email === email);
+      return ok(foundUser.id);
     }
 
     function register() {
@@ -81,12 +104,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function getUsers() {
-      if (!isLoggedIn()) return unauthorized();
+      if (!isLoggedIn()) { return unauthorized(); }
       return ok(users);
     }
 
     function deleteUser() {
-      if (!isLoggedIn()) return unauthorized();
+      if (!isLoggedIn()) { return unauthorized(); }
 
       users = users.filter(x => x.id !== idFromUrl());
       localStorage.setItem('users', JSON.stringify(users));
@@ -104,7 +127,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function unauthorized() {
-      return throwError({ status: 401, error: { message: 'Unauthorised' } });
+      return throwError({ status: 401, error: { message: 'Unauthorized' } });
     }
 
     function isLoggedIn() {

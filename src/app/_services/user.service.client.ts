@@ -16,7 +16,15 @@ export class UserService{
   }
 
   updateAccount(user: User){
-    return this.http.post('/users/updateAccount', user);
+    return this.http.post(`/users/updateAccount`, user);
+  }
+
+  checkEmailExistence(email: string){
+    return this.http.post<number>(`/users/checkEmailExistence`, email);
+  }
+
+  updatePassword(id, newPassword){
+    return this.http.post(`/users/updatePassword`, { id, newPassword });
   }
 }
 // The user service contains a standard set of CRUD methods for managing users,
