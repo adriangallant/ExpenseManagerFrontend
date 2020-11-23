@@ -6,6 +6,8 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 // array in local storage for registered users
 let users = JSON.parse(localStorage.getItem('users')) || [];
 
+let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -34,6 +36,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return checkEmailExistence();
         case url.endsWith('/users/updatePassword') && method === 'POST':
           return updatePassword();
+        case url.endsWith('/transactions/create') && method === 'POST':
+          return createTransaction();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -100,6 +104,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       users.push(user);
       localStorage.setItem('users', JSON.stringify(users));
 
+      return ok();
+    }
+
+    function createTransaction() {
+      const transaction = body;
+      console.log(transaction);
       return ok();
     }
 

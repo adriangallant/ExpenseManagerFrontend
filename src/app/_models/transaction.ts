@@ -5,4 +5,5 @@ export class Transaction{
   dateUpdated: Date;
   title: string;
   type: string;
+  userId: number;
 }

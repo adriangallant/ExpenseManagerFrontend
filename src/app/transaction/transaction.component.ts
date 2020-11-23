@@ -5,6 +5,8 @@ import {UserService} from '../_services/user.service.client';
 import {AlertService} from '../_services/alert.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {Friend} from '../_models/friend';
+import {TransactionService} from '../_services/transaction.service';
+import {first} from 'rxjs/operators';
 
 interface TransactionType {
   value: string;
@@ -32,7 +34,8 @@ export class TransactionComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private transactionService: TransactionService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +57,16 @@ export class TransactionComponent implements OnInit {
       return;
     }
     this.loading = true;
-    alert('this worked');
+    this.transactionService.createTransaction(this.transactionForm.value, this.authenticationService.currentUserValue.id)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.alertService.success('Transaction created successfully', false);
+          this.transactionForm.reset();
+        },
+        error => {
+          this.alertService.error(error);
+        });
     this.loading = false;
     this.submitted = false;
   }
