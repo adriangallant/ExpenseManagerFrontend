@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivityComponent implements OnInit {
 
+  loading = false;
+  submitted = false;
+
+  activity: [];
+
   constructor() { }
 
   ngOnInit(): void {

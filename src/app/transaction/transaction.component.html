@@ -55,7 +55,7 @@
                   <div class="row">
                     <div class="col-sm-8">
                       <label for="transactionFriends" class="primary-color-blue-text">Select a friend to add: </label>
-                      <select formControlName="transactionFriend" id="transactionFriends" name="transactionFriends" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.transactionFriend.errors }" required>
+                      <select formControlName="transactionFriend" id="transactionFriends" name="transactionFriends" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.transactionFriend.errors }">
                         <option disabled selected value="">--select a friend--</option>
                         <option value="Aaron">Aaron</option>
                       </select>
@@ -72,11 +72,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="col text-center pt-2">
-                  <button [disabled]="loading" type="submit" class="btn primary-color-blue-background text-white col-sm-10 mt-3">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Create
-                  </button>
+                <div class="form-group">
+                  <button [disabled]="loading" type="reset" name="cancel-button" class="btn btn-danger col-sm-2">Reset</button>
+                  <div class="float-right col-sm-4">
+                    <button [disabled]="loading" type="submit" name="change-password-button" class="btn primary-color-blue-background text-white col-sm-7">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Create
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

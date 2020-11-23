@@ -6,6 +6,7 @@ import {Friend} from '../_models/friend';
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.css']
 })
+
 export class FriendsComponent implements OnInit {
 
   loading = false;

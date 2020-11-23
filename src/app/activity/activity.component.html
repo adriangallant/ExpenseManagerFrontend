@@ -9,7 +9,17 @@
               <h2 class="h2 mt-lg-3 primary-color-blue-text">Activity</h2>
             </div>
             <hr class="rounded w-75 secondary-color-yellow-background">
-
+            <div *ngIf="!activity">
+              <br><br><br><br>
+              <h2 class="text-center">Looks like you don't have any activity :(</h2>
+              <h4 class="text-center">Make some transactions!</h4>
+              <br><br><br><br>
+              <div class="pb-5 row">
+                <div class="col text-center">
+                  <button routerLink="/transaction" class="btn primary-color-blue-background text-white">Add Transaction</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
