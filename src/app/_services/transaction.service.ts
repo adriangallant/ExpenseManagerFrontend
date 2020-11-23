@@ -5,7 +5,7 @@ import { User } from '../_models/user';
 
 
 @Injectable({providedIn: 'root'})
-export class FriendsService {
+export class TransactionService {
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
   constructor(private http: HttpClient) {
