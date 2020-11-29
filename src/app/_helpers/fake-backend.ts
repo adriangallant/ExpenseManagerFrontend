@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import {Transaction} from '../_models/transaction';
 
 // array in local storage for registered users
 let users = JSON.parse(localStorage.getItem('users')) || [];
 
-let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+const friends = JSON.parse(localStorage.getItem('friends')) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -38,6 +41,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return updatePassword();
         case url.endsWith('/transactions/create') && method === 'POST':
           return createTransaction();
+        case url.endsWith('/transactions/findAllByUserId') && method === 'POST':
+          return findAllTransactionsByUserId();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -109,8 +114,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function createTransaction() {
       const transaction = body;
-      console.log(transaction);
+      transaction.id = transactions.length ? Math.max(...transactions.map(x => x.id)) + 1 : 1;
+      transactions.push(transaction);
+      localStorage.setItem('transactions', JSON.stringify(transactions));
       return ok();
+    }
+
+    function findAllTransactionsByUserId(){
+      console.log(body);
+      const userId = body;
+      console.log(userId);
+      for (const index in transactions){
+        if ( transactions[index].userId !== userId){
+          transactions.splice(index, 1);
+        }
+      }
+      console.log(transactions);
+      return ok(transactions);
     }
 
     function getUsers() {

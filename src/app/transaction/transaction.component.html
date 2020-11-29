@@ -45,7 +45,7 @@
                       <label for="transactionAmount" class="primary-color-blue-text">Transaction Amount: </label>
                       <input formControlName="transactionAmount" id="transactionAmount" name="transactionAmount" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.transactionAmount.errors }" required/>
                       <div *ngIf="submitted && f.transactionAmount.errors" class="invalid-feedback">
-                        <div *ngIf="f.transactionAmount.errors.required">Please enter an amount</div>
+                        <div *ngIf="f.transactionAmount.errors.pattern || f.transactionAmount.errors.required">Please enter a valid amount (..0.00)</div>
                       </div>
                     </div>
                   </div>
@@ -54,9 +54,8 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-8">
-                      <label for="transactionFriends" class="primary-color-blue-text">Select a friend to add: </label>
-                      <select formControlName="transactionFriend" id="transactionFriends" name="transactionFriends" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.transactionFriend.errors }">
-                        <option disabled selected value="">--select a friend--</option>
+                      <label for="transactionFriends" class="primary-color-blue-text">Select friends to add: </label>
+                      <select multiple formControlName="transactionFriend" id="transactionFriends" name="transactionFriends" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.transactionFriend.errors }">
                         <option value="Aaron">Aaron</option>
                       </select>
                     </div>
@@ -65,7 +64,7 @@
                 <br>
                 <div class="form-group">
                   <div class="custom-file col-sm-8">
-                    <input formControlName="receiptImage" type="file" class="custom-file-input" id="customFile" [ngClass]="{ 'is-invalid': submitted && f.receiptImage.errors }">
+                    <input formControlName="receiptImage" type="file"  accept="image/x-png,image/jpeg,image/jpg" class="custom-file-input" id="customFile" [ngClass]="{ 'is-invalid': submitted && f.receiptImage.errors }">
                     <label class="custom-file-label" for="customFile">Upload a receipt</label>
                     <div *ngIf="submitted && f.receiptImage.errors" class="invalid-feedback">
                       <div *ngIf="f.receiptImage.errors.required">This field must be an image.</div>
@@ -89,50 +88,3 @@
     </div>
   </div>
 </body>
-
-<!-- <body>
-  <div id="transaction">
-    <div class="container">
-      <div id="padding-row" class="row justify-content-center align-items-center">
-        <div id="transaction-column" class="col-md-6">
-          <div id="border-box" class="shadow-lg rounded col-md-12 mt-lg-5 pb-3">
-            <div class="text-center">
-              <h2 class="h2 mt-lg-3 primary-color-blue-text pb-4">Add a Transaction</h2>
-            </div>
-            <form id="transactionForm" class="form" method="post" action="">
-              <div class="form-group">
-                <label for="transactionTitle" class="primary-color-blue-text">Transaction Title: </label>
-                <input id="transactionTitle" name="transactionTitle" type="text" class="form-control" required/>
-              </div>
-              <div class="form-group">
-                <label for="transactionType" class="primary-color-blue-text">Transaction Type: </label>
-                <select class="form-control" id="transactionType" required>
-                  <option hidden disabled selected value="">--select an option--</option>
-                  <option value="Expense">Expense</option>
-                  <option value="Income">Income</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="transactionAmount" class="primary-color-blue-text">Transaction Amount: </label>
-                <input id="transactionAmount" name="transactionAmount" type="text" class="form-control" required/>
-              </div>
-              <div class="form-group">
-                <label for="transactionFriends" class="primary-color-blue-text">Select a friend to add: </label>
-                <select id="transactionFriends" name="transactionFriends" class="form-control" required>
-                  <option hidden disabled selected value="">--select a friend--</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="transactionReceipt" class="primary-color-blue-text">Upload a Receipt: </label>
-                <input type="file" id="transactionReceipt"/>
-              </div>
-              <div class="col text-center pt-2">
-                <button type="submit" name="addTransaction" class="btn primary-color-blue-background text-white col-md-5">Add Transaction</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body> -->

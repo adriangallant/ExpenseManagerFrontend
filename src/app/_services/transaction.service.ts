@@ -16,4 +16,8 @@ export class TransactionService {
     transaction.userId = id;
     return this.http.post(`/transactions/create`, transaction);
   }
+
+  findAllTransactionsByUserId(userId: number){
+    return this.http.post(`/transactions/findAllByUserId`, userId);
+  }
 }

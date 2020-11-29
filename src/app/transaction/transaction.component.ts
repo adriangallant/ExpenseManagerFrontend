@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {UserService} from '../_services/user.service.client';
 import {AlertService} from '../_services/alert.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {Friend} from '../_models/friend';
@@ -31,7 +30,6 @@ export class TransactionComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
@@ -42,7 +40,7 @@ export class TransactionComponent implements OnInit {
     this.transactionForm = this.formBuilder.group({
       transactionTitle: ['', Validators.required],
       transactionType: ['', Validators.required],
-      transactionAmount: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      transactionAmount: ['', [Validators.required, Validators.pattern(/^\d*\.?\d{2}$/)]],
       transactionFriend: [''],
       receiptImage: ['']
     });
@@ -61,7 +59,7 @@ export class TransactionComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Transaction created successfully', false);
+          alert('Transaction created successfully!');
           this.transactionForm.reset();
         },
         error => {
