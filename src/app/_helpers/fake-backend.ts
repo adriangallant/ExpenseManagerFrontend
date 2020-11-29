@@ -29,7 +29,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return authenticate();
         case url.endsWith('/users/register') && method === 'POST':
           return register();
-        case url.endsWith('/users') && method === 'GET':
+        case url.endsWith('/users/') && method === 'GET':
           return getUsers();
         case url.match(/\/users\/\d+$/) && method === 'DELETE':
           return deleteUser();
@@ -43,6 +43,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return createTransaction();
         case url.endsWith('/transactions/findAllByUserId') && method === 'POST':
           return findAllTransactionsByUserId();
+        case url.endsWith('/users/getUsersBySearch') && method === 'POST':
+          return getUsersFromSearch();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -96,6 +98,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       const email = body;
       const foundUser =  users.find(x => x.email === email);
       return ok(foundUser.id);
+    }
+
+    function getUsersFromSearch() {
+      console.log(body);
+      return ok();
     }
 
     function register() {

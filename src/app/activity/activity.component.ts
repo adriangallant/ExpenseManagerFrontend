@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {Router} from '@angular/router';
 import {AlertService} from '../_services/alert.service';
 import {AuthenticationService} from '../_services/authentication.service';
@@ -16,21 +16,26 @@ export class ActivityComponent implements OnInit {
   submitted = false;
   loadingActivity = true;
 
-  activity: any;
+  activity: Transaction[] = [];
 
   constructor(
     private router: Router,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.initializeActivity();
   }
 
+  ngAfterViewInit(): void{
+    this.cdr.detectChanges();
+  }
+
   initializeActivity(){
-    this.transactionService.findAllTransactionsByUserId(this.authenticationService.currentUserValue.id)
+     this.transactionService.findAllTransactionsByUserId(this.authenticationService.currentUserValue.id)
       .subscribe(value => this.activity = value);
   }
 

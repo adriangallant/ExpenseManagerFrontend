@@ -2,6 +2,9 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import { User } from '../_models/user';
+import {CompleteUser} from '../_models/CompleteUser';
+import {Account} from '../_models/account';
+
 
 
 @Injectable({providedIn: 'root'})
@@ -10,9 +13,10 @@ export class UserService{
 
   constructor(private http: HttpClient) { }
 
-  register(user: User) {
+  register(user: User, account: Account) {
     //                  ${config.apiUrl}
-    return this.http.post(`/users/register`, user);
+    const completeUser: CompleteUser = new CompleteUser(user, account);
+    return this.http.post(`http://localhost:8080/api/v1/createAccount`, completeUser);
   }
 
   updateAccount(user: User){

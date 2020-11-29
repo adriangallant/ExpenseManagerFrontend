@@ -57,7 +57,11 @@
                       <label for="transactionFriends" class="primary-color-blue-text">Select friends to add: </label>
                       <select multiple formControlName="transactionFriend" id="transactionFriends" name="transactionFriends" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.transactionFriend.errors }">
                         <option value="Aaron">Aaron</option>
+                        <option value="Ohsafa">Ohsafa</option>
                       </select>
+                      <div class="figure-caption">
+                        Press ctrl to select multiple
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -68,6 +72,9 @@
                     <label class="custom-file-label" for="customFile">Upload a receipt</label>
                     <div *ngIf="submitted && f.receiptImage.errors" class="invalid-feedback">
                       <div *ngIf="f.receiptImage.errors.required">This field must be an image.</div>
+                    </div>
+                    <div class="figure-caption">
+                      {{f.receiptImage.value}}
                     </div>
                   </div>
                 </div>
