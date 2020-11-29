@@ -52,13 +52,12 @@
   float: right;
 }
 
-html{
-  min-height: 100%;
-}
-
 footer{
-  clear: both;
   position: relative;
+  bottom: 0;
 }
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

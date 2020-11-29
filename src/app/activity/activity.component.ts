@@ -14,8 +14,9 @@ export class ActivityComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  loadingActivity = true;
 
-  activity: {};
+  activity: any;
 
   constructor(
     private router: Router,
@@ -25,7 +26,16 @@ export class ActivityComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activity = this.transactionService.findAllTransactionsByUserId(this.authenticationService.currentUserValue.id);
+    this.initializeActivity();
   }
 
+  initializeActivity(){
+    this.transactionService.findAllTransactionsByUserId(this.authenticationService.currentUserValue.id)
+      .subscribe(value => this.activity = value);
+  }
+
+  checkActivityLength(){
+    this.loadingActivity = false;
+    return this.activity.length > 0;
+  }
 }

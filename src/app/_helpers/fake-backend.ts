@@ -121,16 +121,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function findAllTransactionsByUserId(){
-      console.log(body);
       const userId = body;
-      console.log(userId);
+      let userTransactions = [];
       for (const index in transactions){
-        if ( transactions[index].userId !== userId){
-          transactions.splice(index, 1);
+        if ( transactions[index].userId === userId){
+             userTransactions.push(transactions[index]);
         }
       }
-      console.log(transactions);
-      return ok(transactions);
+      return ok(userTransactions);
     }
 
     function getUsers() {
