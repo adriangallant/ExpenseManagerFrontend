@@ -14,7 +14,7 @@ export class ActivityComponent implements OnInit {
 
   loading = false;
   submitted = false;
-  loadingActivity = true;
+  loadingActivity: boolean;
 
   activity: Transaction[] = [];
 
@@ -24,7 +24,9 @@ export class ActivityComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private transactionService: TransactionService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {
+    this.loadingActivity = true;
+  }
 
   ngOnInit(): void {
     this.initializeActivity();

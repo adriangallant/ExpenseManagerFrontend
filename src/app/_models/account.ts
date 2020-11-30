@@ -5,5 +5,4 @@ export class Account{
   email: string;
   phone: string;
   picture: any;
-  // token: string;
 }

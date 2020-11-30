@@ -16,6 +16,7 @@ import { AlertService } from '../_services/alert.service';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
+
 export class AccountComponent implements OnInit, OnDestroy {
   accountForm: FormGroup;
   loading = false;
