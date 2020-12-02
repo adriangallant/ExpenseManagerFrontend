@@ -46,7 +46,7 @@ export class TransactionComponent implements OnInit {
     });
   }
 
-  get f(){ return this.transactionForm.controls; }
+  get f(){return this.transactionForm.controls; }
 
   onSubmit(){
     this.submitted = true;

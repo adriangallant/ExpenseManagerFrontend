@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 
 import { User } from '../_models/user';
 
-
 @Injectable({providedIn: 'root'})
 export class UserService{
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -12,19 +11,15 @@ export class UserService{
 
   register(user: User) {
     //                  ${config.apiUrl}
-    return this.http.post(`/users/register`, user);
-  }
-
-  updateAccount(user: User){
-    return this.http.post(`/users/updateAccount`, user);
+    return this.http.post(`http://localhost:8080/api/v1/createAccount`, user);
   }
 
   checkEmailExistence(email: string){
-    return this.http.post<number>(`/users/checkEmailExistence`, email);
+    return this.http.post<User>(`http://localhost:8080/api/v1/forgot`, email);
   }
 
-  updatePassword(id, newPassword){
-    return this.http.post(`/users/updatePassword`, { id, newPassword });
+  update(user: User){
+    return this.http.post(`http://localhost:8080/api/v1/update`, user);
   }
 }
 // The user service contains a standard set of CRUD methods for managing users,

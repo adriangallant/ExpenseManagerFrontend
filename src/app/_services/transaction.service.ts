@@ -18,6 +18,6 @@ export class TransactionService {
   }
 
   findAllTransactionsByUserId(userId: number){
-    return this.http.post(`/transactions/findAllByUserId`, userId);
+    return this.http.post<Transaction[]>(`/transactions/findAllByUserId`, userId);
   }
 }
