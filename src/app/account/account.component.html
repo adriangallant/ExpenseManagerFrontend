@@ -39,9 +39,9 @@
                     </div>
                     <div class="col-sm-6">
                       <label for="phone" class="primary-color-blue-text">Phone </label>
-                      <input formControlName="phoneNumber" id="phone" name="phone" type="tel" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" required>
-                      <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
-                        <div *ngIf="f.phoneNumber.errors.required">Enter a valid 10 digit phone number</div>
+                      <input formControlName="phone" id="phone" name="phone" type="tel" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" required>
+                      <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                        <div *ngIf="f.phone.errors.required">Enter a valid 10 digit phone number</div>
                       </div>
                     </div>
                   </div>

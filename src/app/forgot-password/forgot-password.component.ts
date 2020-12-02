@@ -19,7 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   loading = false;
   submitted = false;
-  userId: number;
+  user: User;
 
   constructor(
     private router: Router,
@@ -65,8 +65,8 @@ export class ForgotPasswordComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.userId = data;
-          if (!this.userId){
+          this.user = data;
+          if (!this.user){
             this.alertService.error('There is no account associated with this email.');
             this.loading = false;
             this.submitted = false;
@@ -88,8 +88,9 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.changePasswordForm.invalid){
       return;
     }
+    this.user.password = this.g.newPassword.value;
     this.loading = true;
-    this.userService.updatePassword(this.userId, this.changePasswordForm.controls.newPassword.value)
+    this.userService.update(this.user)
       .pipe(first())
       .subscribe(
         data => {

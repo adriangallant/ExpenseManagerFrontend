@@ -5,21 +5,21 @@
       <div id="register-row" class="row justify-content-center align-items-center">
         <div id="register-column" class="col-md-6">
           <div id="register-box" class="shadow-lg rounded">
-            <form id="register-form" [formGroup]="accountRegisterForm" class="form">
+            <form id="register-form" [formGroup]="userRegisterForm" (ngSubmit)="onSubmit()" class="form">
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-6">
                     <label for="firstname" class="primary-color-blue-text"> First Name</label>
-                    <input formControlName="firstName" type="text" name="firstname" id="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required>
-                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                      <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                    <input formControlName="firstName" type="text" name="firstname" id="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && g.firstName.errors }" required>
+                    <div *ngIf="submitted && g.firstName.errors" class="invalid-feedback">
+                      <div *ngIf="g.firstName.errors.required">First Name is required</div>
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <label for="lastname" class="primary-color-blue-text"> Last Name</label>
-                    <input formControlName="lastName" type="text" name="lastname" id="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" required>
-                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                      <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    <input formControlName="lastName" type="text" name="lastname" id="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && g.lastName.errors }" required>
+                    <div *ngIf="submitted && g.lastName.errors" class="invalid-feedback">
+                      <div *ngIf="g.lastName.errors.required">Last Name is required</div>
                     </div>
                   </div>
                 </div>
@@ -28,25 +28,23 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <label for="email" class="primary-color-blue-text"> Email</label>
-                    <input formControlName="email" type="text" name="email" id="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="example@email.com" required>
-                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                      <div *ngIf="f.email.errors.required">Enter a valid email</div>
+                    <input formControlName="email" type="text" name="email" id="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && g.email.errors }" placeholder="example@email.com" required>
+                    <div *ngIf="submitted && g.email.errors" class="invalid-feedback">
+                      <div *ngIf="g.email.errors.required">Enter a valid email</div>
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <label for="phone" class="primary-color-blue-text"> Phone Number </label>
-                    <input formControlName="phone" type="tel" id="phone" name="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" placeholder="999999999" required>
-                    <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-                      <div *ngIf="f.phone.errors.required">Enter a valid 10 digit phone number</div>
+                    <input formControlName="phone" type="tel" id="phone" name="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && g.phone.errors }" placeholder="999999999" required>
+                    <div *ngIf="submitted && g.phone.errors" class="invalid-feedback">
+                      <div *ngIf="g.phone.errors.required">Enter a valid 10 digit phone number</div>
                     </div>
                   </div>
                 </div>
               </div>
-            </form>
-            <div>
-              <hr id="border-sign-up" class="rounded secondary-color-yellow-background">
-            </div>
-            <form [formGroup]="userRegisterForm" (ngSubmit)="onSubmit()" class="form register-form">
+              <div>
+                <hr id="border-sign-up" class="rounded secondary-color-yellow-background">
+              </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-12">

@@ -21,10 +21,10 @@ export class AuthenticationService {
 
   login(username, password) {
     //                        (${config.apiUrl}/users/authenticate)
-    return this.http.post<any>(`/users/authenticate`, { username, password })
+    return this.http.post<User>(`http://localhost:8080/api/v1/verify`, { username, password })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
-        if (user && user.token) {
+        if (user) { //  && user.token
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);

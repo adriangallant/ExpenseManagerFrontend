@@ -41,7 +41,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       firstName: [this.authenticationService.currentUserValue.firstName, Validators.required],
       lastName: [this.authenticationService.currentUserValue.lastName, Validators.required],
       email: [this.authenticationService.currentUserValue.email, [Validators.required, Validators.email]],
-      phoneNumber: [this.authenticationService.currentUserValue.phoneNumber, Validators.required],
+      phone: [this.authenticationService.currentUserValue.phone, Validators.required],
       username: [this.authenticationService.currentUserValue.username],
       password: [this.authenticationService.currentUserValue.password, Validators.required],
       confirmPassword: ['', Validators.required]
@@ -72,7 +72,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-    this.userService.updateAccount(this.accountForm.value)
+    this.userService.update(this.accountForm.value)
       .pipe(first())
       .subscribe(
         data => {
@@ -81,7 +81,7 @@ export class AccountComponent implements OnInit, OnDestroy {
           this.alertService.success('Update Successful. Sign in again.', true);
         },
         error => {
-          this.alertService.error(error);
+          this.alertService.error('Something went wrong when creating your account. :(');
           this.loading = false;
         });
   }
