@@ -25,6 +25,6 @@ export class FriendsService {
     if (term === '') {
       return of([]);
     }
-    return this.http.post(`/users/getUsersBySearch`, term); // { params: PARAMS.set('search', term) }
+    return this.http.get<any>(`http://localhost:8080/api/v1/getAllUsers/${term}`); // { params: PARAMS.set('search', term) }
   }
 }

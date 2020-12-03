@@ -29,7 +29,7 @@
                 <div class="col-sm-8 text-center offset-2">
                   <table class="table table-striped table-bordered table-hover">
                     <tbody>
-                      <tr *ngFor="let record of activity" [ngClass]="{'table-danger': record.transactionType == 'Expense'}">
+                      <tr *ngFor="let record of activities" [ngClass]="{'table-danger': record.transactionType == 'Expense'}">
                         <td>You had a transaction titled {{record.transactionTitle}}</td>
                       </tr>
                     </tbody>

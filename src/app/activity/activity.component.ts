@@ -16,7 +16,7 @@ export class ActivityComponent implements OnInit {
   submitted = false;
   loadingActivity: boolean;
 
-  activity: Transaction[] = [];
+  activities: any;
 
   constructor(
     private router: Router,
@@ -38,11 +38,11 @@ export class ActivityComponent implements OnInit {
 
   initializeActivity(){
      this.transactionService.findAllTransactionsByUserId(this.authenticationService.currentUserValue.id)
-      .subscribe(value => this.activity = value);
+      .subscribe(value => this.activities = value);
   }
 
   checkActivityLength(){
     this.loadingActivity = false;
-    return this.activity.length > 0;
+    return this.activities.length > 0;
   }
 }

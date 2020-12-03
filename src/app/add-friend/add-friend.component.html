@@ -23,27 +23,25 @@
                   <h4>Searching ... </h4>
                 </div>
               </div>
-              <div class="row">
-                <ng-container *ngIf="apiResponse['Response'] == 'False'; else elseTemplate">
-
-                  <div class="col-12 text-center">
+              <div class="row col-sm-12 justify-content-center">
+                <div *ngIf="apiResponse.length === 0">
+                  <div class="col-sm-12 text-center">
                     <div class="alert alert-danger" role="alert">
-                      {{apiResponse['Error']}}
+                      Could not find any results. Try a different username!
                     </div>
                   </div>
-                </ng-container>
-                <ng-template #elseTemplate>
-                  <div class="col-3" *ngFor="let user of apiResponse['Search']">
-
-                    <div class="card" style="margin:5px;">
-                      <img class="card-img-top" src="{{user['Poster']}}">
-                      <div class="card-body">
-                        <h5 class="card-title">{{user['Title']}}</h5>
-                        <p class="card-text">Year: {{user['Year']}}</p>
-                      </div>
-                    </div>
+                </div>
+                <div *ngIf="apiResponse.length > 0">
+                  <div class="col-sm-12 offset-1">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item" *ngFor="let user of apiResponse">
+                        {{user['firstName']}} {{user['lastName']}}
+                      </li>
+                    </ul>
+                  <!--<h5 class="card-title">{{user['firstName']}} {{user['lastName']}}</h5>
+                          <p class="card-text">Username: {{user['username']}}</p> -->
                   </div>
-                </ng-template>
+                </div>
               </div>
             </div>
           </div>

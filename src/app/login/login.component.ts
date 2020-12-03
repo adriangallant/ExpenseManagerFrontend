@@ -5,6 +5,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { AlertService } from '../_services/alert.service';
 import { first } from 'rxjs/operators';
 import {User} from '../_models/user';
+import {throwError} from 'rxjs';
 
 
 
@@ -18,6 +19,10 @@ export class LoginComponent implements OnInit {
   submitted = false;
   loading = false;
   returnUrl: string;
+  invalidLoginError: {
+    msg: 'Invalid username or password.',
+    client: true
+  };
 
   constructor(
     private router: Router,
@@ -44,6 +49,16 @@ export class LoginComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
+  setLoadingSubmitted( status: boolean ) {
+    if (status){
+      this.submitted = true;
+      this.loading = true;
+    }else {
+      this.submitted = false;
+      this.loading = false;
+    }
+  }
+
   onSubmit(){
     this.submitted = true;
 
@@ -56,11 +71,17 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
+
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+          if ( data.id === 0 ){
+            this.alertService.error('Invalid username or password.');
+            this.setLoadingSubmitted(false);
+          }else {
+            this.router.navigate([this.returnUrl]);
+          }
         },
         error => {
           this.alertService.error(error);

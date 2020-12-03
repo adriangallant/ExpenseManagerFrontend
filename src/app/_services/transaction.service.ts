@@ -9,15 +9,23 @@ import {Transaction} from '../_models/transaction';
 export class TransactionService {
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
-  createTransaction(transaction: Transaction, id: number){
+  createTransaction(transaction: Transaction, id: number) {
+    transaction.amount = this.checkTransactionType(transaction);
     transaction.userId = id;
-    return this.http.post(`/transactions/create`, transaction);
+    return this.http.post<Transaction>(`http://localhost:8080/api/v1/createTransaction`, transaction);
   }
 
   findAllTransactionsByUserId(userId: number){
-    return this.http.post<Transaction[]>(`/transactions/findAllByUserId`, userId);
+    return this.http.get<any>(`http://localhost:8080/api/v1/getAllTransactions/${userId}`);
+  }
+
+  checkTransactionType(transaction: Transaction) {
+    if ( transaction.type === 'Expense' ){
+      return transaction.amount = -Math.abs(transaction.amount);
+    } else {
+      return transaction.amount = Math.abs(transaction.amount);
+    }
   }
 }

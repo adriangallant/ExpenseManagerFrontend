@@ -14,9 +14,9 @@
                   <div class="row">
                     <div class="col-sm-8">
                       <label for="transactionTitle" class="primary-color-blue-text">Transaction Title: </label>
-                      <input formControlName="transactionTitle" id="transactionTitle" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.transactionTitle.errors }" required/>
-                      <div *ngIf="submitted && f.transactionTitle.errors" class="invalid-feedback">
-                        <div *ngIf="f.transactionTitle.errors.required">This field is required</div>
+                      <input formControlName="title" id="transactionTitle" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" required/>
+                      <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                        <div *ngIf="f.title.errors.required">This field is required</div>
                       </div>
                     </div>
                   </div>
@@ -26,14 +26,14 @@
                   <div class="row">
                     <div class="col-sm-8">
                       <label for="transactionType" class="primary-color-blue-text">Transaction Type: </label>
-                      <select formControlName="transactionType" class="form-control" id="transactionType" [ngClass]="{ 'is-invalid': submitted && f.transactionType.errors }" required>
+                      <select formControlName="type" class="form-control" id="transactionType" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required>
                         <option disabled selected value="">--select an option--</option>
                         <option *ngFor="let type of transactionTypes" [value]="type.value">
                           {{type.viewValue}}
                         </option>
                       </select>
-                      <div *ngIf="submitted && f.transactionType.errors" class="invalid-feedback">
-                        <div *ngIf="f.transactionType.errors.required">Please select a transaction type</div>
+                      <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                        <div *ngIf="f.type.errors.required">Please select a transaction type</div>
                       </div>
                     </div>
                   </div>
@@ -43,9 +43,9 @@
                   <div class="row">
                     <div class="col-sm-8">
                       <label for="transactionAmount" class="primary-color-blue-text">Transaction Amount: </label>
-                      <input formControlName="transactionAmount" id="transactionAmount" name="transactionAmount" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.transactionAmount.errors }" required/>
-                      <div *ngIf="submitted && f.transactionAmount.errors" class="invalid-feedback">
-                        <div *ngIf="f.transactionAmount.errors.pattern || f.transactionAmount.errors.required">Please enter a valid amount (..0.00)</div>
+                      <input formControlName="amount" id="transactionAmount" name="transactionAmount" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.amount.errors }" required/>
+                      <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+                        <div *ngIf="f.amount.errors.pattern || f.amount.errors.required">Please enter a valid amount (..0.00)</div>
                       </div>
                     </div>
                   </div>
@@ -55,7 +55,7 @@
                   <div class="row">
                     <div class="col-sm-8">
                       <label for="transactionFriends" class="primary-color-blue-text">Select friends to add: </label>
-                      <select multiple formControlName="transactionFriend" id="transactionFriends" name="transactionFriends" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.transactionFriend.errors }">
+                      <select multiple formControlName="friends" id="transactionFriends" name="transactionFriends" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.friends.errors }">
                         <option value="Aaron">Aaron</option>
                         <option value="Ohsafa">Ohsafa</option>
                       </select>

@@ -38,10 +38,10 @@ export class TransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionForm = this.formBuilder.group({
-      transactionTitle: ['', Validators.required],
-      transactionType: ['', Validators.required],
-      transactionAmount: ['', [Validators.required, Validators.pattern(/^\d*\.?\d{2}$/)]],
-      transactionFriend: [''],
+      title: ['', Validators.required],
+      type: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.pattern(/^\d*\.?\d{2}$/)]],
+      friends: [''],
       receiptImage: ['']
     });
   }

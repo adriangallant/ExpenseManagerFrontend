@@ -18,6 +18,7 @@ export class AddFriendComponent implements OnInit {
   @ViewChild('friendSearchInput', { static: true }) friendSearchInput: ElementRef;
   apiResponse: any;
   isSearching: boolean;
+  hasSearched: boolean;
 
   constructor(
     private router: Router,
