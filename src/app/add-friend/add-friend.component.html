@@ -17,29 +17,50 @@
                   </div>
                 </div>
               </div>
-              <hr class="rounded w-75 primary-color-blue-background mb-5">
+              <hr class="rounded w-75 primary-color-blue-background">
               <div class="row" *ngIf="isSearching">
                 <div class="col-12 text-center">
                   <h4>Searching ... </h4>
                 </div>
               </div>
               <div class="row col-sm-12 justify-content-center">
-                <div *ngIf="apiResponse.length === 0">
+                <div *ngIf="apiResponse.length === 0 && !isSearching">
                   <div class="col-sm-12 text-center">
                     <div class="alert alert-danger" role="alert">
                       Could not find any results. Try a different username!
                     </div>
                   </div>
                 </div>
-                <div *ngIf="apiResponse.length > 0">
-                  <div class="col-sm-12 offset-1">
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item" *ngFor="let user of apiResponse">
-                        {{user['firstName']}} {{user['lastName']}}
-                      </li>
-                    </ul>
-                  <!--<h5 class="card-title">{{user['firstName']}} {{user['lastName']}}</h5>
-                          <p class="card-text">Username: {{user['username']}}</p> -->
+                <div *ngIf="apiResponse.length > 0 && !isSearching">
+                  <div class="row">
+                    <div class="col">
+                      <table class="table table-hover table-striped border-bottom">
+                        <thead class="primary-color-blue-background text-white">
+                          <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let user of apiResponse" class="border">
+                            <td>{{user['username']}}</td>
+                            <td>{{user['firstName']}}</td>
+                            <td>{{user['lastName']}}</td>
+                            <td>
+                              <button
+                                (click)="addFriend(user['id'])"
+                                [disabled]="loading || user['id'] === authenticationService.currentUserValue.id"
+                                class="btn secondary-color-yellow-background text-white">
+                                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                  Add
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

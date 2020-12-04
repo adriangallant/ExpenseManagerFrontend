@@ -1,5 +1,5 @@
 export class Share{
   id: number;
-  friendId: number;
+  partnerId: number;
   transactionId: number;
 }

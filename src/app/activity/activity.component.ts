@@ -4,6 +4,7 @@ import {AlertService} from '../_services/alert.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {TransactionService} from '../_services/transaction.service';
 import {Transaction} from '../_models/transaction';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-activity',
@@ -16,7 +17,7 @@ export class ActivityComponent implements OnInit {
   submitted = false;
   loadingActivity: boolean;
 
-  activities: any;
+  activities: Transaction[];
 
   constructor(
     private router: Router,
@@ -26,6 +27,7 @@ export class ActivityComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.loadingActivity = true;
+    this.activities = [];
   }
 
   ngOnInit(): void {
@@ -36,12 +38,18 @@ export class ActivityComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  initializeActivity(){
+  initializeActivity(): void{
      this.transactionService.findAllTransactionsByUserId(this.authenticationService.currentUserValue.id)
-      .subscribe(value => this.activities = value);
+       .pipe(first())
+       .subscribe(value => {
+         this.activities = value;
+         console.log(this.activities);
+       }, error => {
+         this.alertService.error(error);
+         });
   }
 
-  checkActivityLength(){
+  checkActivityLength(): boolean{
     this.loadingActivity = false;
     return this.activities.length > 0;
   }

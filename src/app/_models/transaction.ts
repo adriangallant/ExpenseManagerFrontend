@@ -9,5 +9,4 @@ export class Transaction{
   title: string;
   type: string;
   shares: Share[];
-  picture: any;
 }

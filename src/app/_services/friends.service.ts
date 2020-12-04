@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 
 import { User } from '../_models/user';
 import {of} from 'rxjs';
+import {Friend} from '../_models/friend';
 
 const PARAMS = new HttpParams({
   fromObject: {
@@ -26,5 +27,14 @@ export class FriendsService {
       return of([]);
     }
     return this.http.get<any>(`http://localhost:8080/api/v1/getAllUsers/${term}`); // { params: PARAMS.set('search', term) }
+  }
+
+  addFriend(friend: Friend) {
+    console.log(friend);
+    return this.http.post<Friend>(`http://localhost:8080/api/v1/addFriend`,  friend );
+  }
+
+  getAllFriendsByUserId(userId: number) {
+    return this.http.get<any>(`http://localhost:8080/api/v1/getAllFriends/${userId}`);
   }
 }

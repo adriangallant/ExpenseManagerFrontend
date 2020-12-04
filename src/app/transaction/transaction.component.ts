@@ -6,6 +6,7 @@ import {AuthenticationService} from '../_services/authentication.service';
 import {Friend} from '../_models/friend';
 import {TransactionService} from '../_services/transaction.service';
 import {first} from 'rxjs/operators';
+import {FriendsService} from '../_services/friends.service';
 
 interface TransactionType {
   value: string;
@@ -22,6 +23,8 @@ export class TransactionComponent implements OnInit {
   transactionForm: FormGroup;
   loading = false;
   submitted = false;
+  friends: [];
+  friendsSelect: [];
 
   transactionTypes: TransactionType[] = [
     {value: 'Expense', viewValue: 'Expense'},
@@ -33,17 +36,41 @@ export class TransactionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private transactionService: TransactionService
-  ) {}
+    private transactionService: TransactionService,
+    private friendService: FriendsService
+  ) {
+    this.friendsSelect = [];
+  }
 
   ngOnInit(): void {
     this.transactionForm = this.formBuilder.group({
       title: ['', Validators.required],
       type: ['', Validators.required],
       amount: ['', [Validators.required, Validators.pattern(/^\d*\.?\d{2}$/)]],
-      friends: [''],
-      receiptImage: ['']
+      shares: [''],
+     // picture: ['']
     });
+
+    this.friendService
+      .getAllFriendsByUserId(this.authenticationService.currentUserValue.id)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.friends = data;
+          this.initializeFriendsList();
+        }, error => {
+          this.alertService.error(error);
+        });
+  }
+
+  initializeFriendsList(): void{
+    for (let i = 0; i < this.friends.length; i++){
+      this.friendsSelect.push({
+        name: this.friends[i].firstName.concat(' ').concat(this.friends[i].lastName),
+        userId: this.friends[i].userId
+      });
+    }
+    console.log(this.friendsSelect);
   }
 
   get f(){return this.transactionForm.controls; }

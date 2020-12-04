@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 import { User } from '../_models/user';
 import {Transaction} from '../_models/transaction';
+import {Observable} from 'rxjs';
 
 
 @Injectable({providedIn: 'root'})
@@ -11,21 +12,33 @@ export class TransactionService {
 
   constructor(private http: HttpClient) {}
 
-  createTransaction(transaction: Transaction, id: number) {
-    transaction.amount = this.checkTransactionType(transaction);
+  createTransaction(transaction: Transaction, id: number): Observable<Transaction> {
+    const properShares = transaction.shares;
+    transaction.shares = [];
+    for (let i = 0; i < properShares.length; i++){
+      // @ts-ignore
+      transaction.shares.push({
+        partnerId: Number(properShares[i])
+      });
+    }
     transaction.userId = id;
+    console.log(transaction);
     return this.http.post<Transaction>(`http://localhost:8080/api/v1/createTransaction`, transaction);
   }
 
-  findAllTransactionsByUserId(userId: number){
+  findAllTransactionsByUserId(userId: number): Observable<any>{
     return this.http.get<any>(`http://localhost:8080/api/v1/getAllTransactions/${userId}`);
   }
 
-  checkTransactionType(transaction: Transaction) {
-    if ( transaction.type === 'Expense' ){
-      return transaction.amount = -Math.abs(transaction.amount);
-    } else {
-      return transaction.amount = Math.abs(transaction.amount);
-    }
+  getAccountStatement(userId: number): Observable<any>{
+    return this.http.get<any>(`http://localhost:8080/api/v1/getStatement/${userId}`);
   }
+
+  // checkTransactionType(transaction: Transaction) {
+  //   if ( transaction.type === 'Expense' ){
+  //     return transaction.amount = -Math.abs(transaction.amount);
+  //   } else {
+  //     return transaction.amount = Math.abs(transaction.amount);
+  //   }
+  // }
 }

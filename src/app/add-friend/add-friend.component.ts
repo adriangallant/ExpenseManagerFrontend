@@ -3,11 +3,12 @@ import {Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 
 import { of, fromEvent } from 'rxjs';
-import { debounceTime, map, distinctUntilChanged, filter} from 'rxjs/operators';
+import {debounceTime, map, distinctUntilChanged, filter, first} from 'rxjs/operators';
 
 import {AlertService} from '../_services/alert.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {FriendsService} from '../_services/friends.service';
+import {Friend} from '../_models/friend';
 
 @Component({
   selector: 'app-add-friend',
@@ -18,7 +19,7 @@ export class AddFriendComponent implements OnInit {
   @ViewChild('friendSearchInput', { static: true }) friendSearchInput: ElementRef;
   apiResponse: any;
   isSearching: boolean;
-  hasSearched: boolean;
+  loading: boolean;
 
   constructor(
     private router: Router,
@@ -29,6 +30,7 @@ export class AddFriendComponent implements OnInit {
   ) {
     this.isSearching = false;
     this.apiResponse = [];
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -49,11 +51,29 @@ export class AddFriendComponent implements OnInit {
       this.friendService.searchGetCall(text).subscribe((res) => {
         this.isSearching = false;
         this.apiResponse = res;
-        console.log(this.apiResponse);
       }, (err) => {
         this.isSearching = false;
         console.log('error', err);
       });
     });
+  }
+
+  addFriend(friendId: number) {
+    this.loading = true;
+    const friend = new Friend({
+      userId: this.authenticationService.currentUserValue.id,
+      friendId,
+    });
+    this.friendService.addFriend(friend)
+      .pipe(first())
+      .subscribe(
+        data => {
+            alert('Friend added successfully!');
+            this.loading = false;
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
   }
 }
