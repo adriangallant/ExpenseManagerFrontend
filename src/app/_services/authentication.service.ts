@@ -7,6 +7,9 @@ import { User } from '../_models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+
+  private url = `http://localhost:8080/api/v1`;
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -21,7 +24,7 @@ export class AuthenticationService {
 
   login(username, password) {
     //                        (${config.apiUrl}/users/authenticate)
-    return this.http.post<User>(`http://localhost:8080/api/v1/verify`, { username, password })
+    return this.http.post<User>(`${this.url}/verify`, { username, password })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user.id !== 0) { //  && user.token
