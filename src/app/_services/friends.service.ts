@@ -1,8 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import { of } from 'rxjs';
 
-import { User } from '../_models/user';
-import {of} from 'rxjs';
 import {Friend} from '../_models/friend';
 
 const PARAMS = new HttpParams({
@@ -30,7 +29,6 @@ export class FriendsService {
   }
 
   addFriend(friend: Friend) {
-    console.log(friend);
     return this.http.post<Friend>(`http://localhost:8080/api/v1/addFriend`,  friend );
   }
 

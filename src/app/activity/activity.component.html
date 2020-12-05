@@ -27,9 +27,11 @@
             <div *ngIf="checkActivityLength()">
               <div class="row">
                 <div class="col-sm-8 offset-2">
-                  <table class="table table-striped table-bordered shadow-lg table-hover" style="font-family: Courier;">
+                  <table class="table table-striped table-bordered shadow-lg table-hover rounded"
+                         style="font-family: Courier;">
                     <tbody>
-                      <tr *ngFor="let record of activities" [ngClass]="{'table-danger': record.transactionType == 'Expense'}">
+                      <tr *ngFor="let record of activities"
+                          [ngClass]="{'table-danger': record.type == 'Expense', 'table-success': record.type == 'Income'}">
                         <td><span class="text-lg-left" style="font-size: 1.3em;">{{record.title}}</span>
                           <br>
                           $ {{record.amount}}

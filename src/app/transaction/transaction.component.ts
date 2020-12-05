@@ -23,8 +23,8 @@ export class TransactionComponent implements OnInit {
   transactionForm: FormGroup;
   loading = false;
   submitted = false;
-  friends: [];
-  friendsSelect: [];
+  friends: any[] = [];
+  friendsSelect: any = [];
 
   transactionTypes: TransactionType[] = [
     {value: 'Expense', viewValue: 'Expense'},
@@ -64,18 +64,17 @@ export class TransactionComponent implements OnInit {
   }
 
   initializeFriendsList(): void{
-    for (let i = 0; i < this.friends.length; i++){
+    for (const friend of this.friends){
       this.friendsSelect.push({
-        name: this.friends[i].firstName.concat(' ').concat(this.friends[i].lastName),
-        userId: this.friends[i].userId
+        name: friend.firstName.concat(' ').concat(friend.lastName),
+        userId: friend.userId
       });
     }
-    console.log(this.friendsSelect);
   }
 
   get f(){return this.transactionForm.controls; }
 
-  onSubmit(){
+  onSubmit(): void{
     this.submitted = true;
     this.alertService.clear();
     if (this.transactionForm.invalid){

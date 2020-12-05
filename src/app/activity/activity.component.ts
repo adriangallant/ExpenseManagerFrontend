@@ -43,7 +43,7 @@ export class ActivityComponent implements OnInit {
        .pipe(first())
        .subscribe(value => {
          this.activities = value;
-         console.log(this.activities);
+         this.activities.reverse();
        }, error => {
          this.alertService.error(error);
          });
