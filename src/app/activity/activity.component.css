@@ -8,3 +8,7 @@
 #activity #activity-row #activity-column #activity-box #activity-form {
   padding: 2%;
 }
+
+.activity-bottom-spacing {
+  padding-bottom: 20%;
+}

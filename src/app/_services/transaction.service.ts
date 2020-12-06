@@ -1,7 +1,6 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import { User } from '../_models/user';
 import {Transaction} from '../_models/transaction';
 import {Observable} from 'rxjs';
 
@@ -17,14 +16,13 @@ export class TransactionService {
   createTransaction(transaction: Transaction, id: number): Observable<Transaction> {
     const properShares = transaction.shares;
     transaction.shares = [];
-    for (let i = 0; i < properShares.length; i++){
+    for (const share of properShares){
       // @ts-ignore
       transaction.shares.push({
-        partnerId: Number(properShares[i])
+        partnerId: Number(share)
       });
     }
     transaction.userId = id;
-    console.log(transaction);
     return this.http.post<Transaction>(`${this.url}/createTransaction`, transaction);
   }
 
