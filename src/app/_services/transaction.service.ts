@@ -10,6 +10,7 @@ export class TransactionService {
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
   private localHostUrl = `http://localhost:8080/api/v1`;
+  // private awsUrl = ``;
 
   constructor(private http: HttpClient) {}
 
