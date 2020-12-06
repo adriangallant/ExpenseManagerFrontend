@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 export class TransactionService {
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
-  private url = `http://localhost:8080/api/v1`;
+  private localHostUrl = `http://localhost:8080/api/v1`;
 
   constructor(private http: HttpClient) {}
 
@@ -23,15 +23,15 @@ export class TransactionService {
       });
     }
     transaction.userId = id;
-    return this.http.post<Transaction>(`${this.url}/createTransaction`, transaction);
+    return this.http.post<Transaction>(`${this.localHostUrl}/createTransaction`, transaction);
   }
 
   findAllTransactionsByUserId(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.url}/getAllTransactions/${userId}`);
+    return this.http.get<any>(`${this.localHostUrl}/getAllTransactions/${userId}`);
   }
 
   getAccountStatement(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.url}/getStatement/${userId}`);
+    return this.http.get<any>(`${this.localHostUrl}/getStatement/${userId}`);
   }
 
   // checkTransactionType(transaction: Transaction) {

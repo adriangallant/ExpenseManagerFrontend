@@ -6,7 +6,7 @@ import { User } from '../_models/user';
 @Injectable({providedIn: 'root'})
 export class UserService{
 
-  private url = `http://localhost:8080/api/v1`;
+  private localHostUrl = `http://localhost:8080/api/v1`;
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
@@ -14,15 +14,15 @@ export class UserService{
 
   register(user: User) {
     //                  ${config.apiUrl}
-    return this.http.post(`${this.url}/createAccount`, user);
+    return this.http.post(`${this.localHostUrl}/createAccount`, user);
   }
 
   checkEmailExistence(email: string){
-    return this.http.post<User>(`${this.url}/forgot`, email);
+    return this.http.post<User>(`${this.localHostUrl}/forgot`, email);
   }
 
   update(user: User){
-    return this.http.post(`${this.url}/update`, user);
+    return this.http.post(`${this.localHostUrl}/update`, user);
   }
 }
 // The user service contains a standard set of CRUD methods for managing users,

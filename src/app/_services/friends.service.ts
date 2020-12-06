@@ -21,20 +21,20 @@ export class FriendsService {
   ) {
   }
 
-  private url = `http://localhost:8080/api/v1`;
+  private localHostUrl = `http://localhost:8080/api/v1`;
 
   searchGetCall(term: string) {
     if (term === '') {
       return of([]);
     }
-    return this.http.get<any>(`${this.url}/getAllUsers/${term}`); // { params: PARAMS.set('search', term) }
+    return this.http.get<any>(`${this.localHostUrl}/getAllUsers/${term}`); // { params: PARAMS.set('search', term) }
   }
 
   addFriend(friend: Friend) {
-    return this.http.post<Friend>(`${this.url}/addFriend`,  friend );
+    return this.http.post<Friend>(`${this.localHostUrl}/addFriend`,  friend );
   }
 
   getAllFriendsByUserId(userId: number) {
-    return this.http.get<any>(`${this.url}/getAllFriends/${userId}`);
+    return this.http.get<any>(`${this.localHostUrl}/getAllFriends/${userId}`);
   }
 }
