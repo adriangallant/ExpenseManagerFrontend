@@ -8,7 +8,8 @@ import { User } from '../_models/user';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-  private localHostUrl = `http://localhost:8080/api/v1`;
+  private localHostUrl: string;
+  private awsUrl = `http://expensemanagerbackend-env.eba-btazwimb.us-east-2.elasticbeanstalk.com/api/v1`;
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
@@ -16,6 +17,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.localHostUrl = `http://localhost:8080/api/v1`;
   }
 
   public get currentUserValue(): User {
@@ -24,7 +26,7 @@ export class AuthenticationService {
 
   login(username, password) {
     //                        (${config.apiUrl}/users/authenticate)
-    return this.http.post<User>(`${this.localHostUrl}/verify`, { username, password })
+    return this.http.post<User>(`${this.awsUrl}/verify`, { username, password })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user.id !== 0) { //  && user.token

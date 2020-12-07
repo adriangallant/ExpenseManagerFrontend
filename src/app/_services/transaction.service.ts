@@ -9,10 +9,13 @@ import {Observable} from 'rxjs';
 export class TransactionService {
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
-  private localHostUrl = `http://localhost:8080/api/v1`;
-  // private awsUrl = ``;
+  private localHostUrl: string;
+  private awsUrl = `http://expensemanagerbackend-env.eba-btazwimb.us-east-2.elasticbeanstalk.com/api/v1`;
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) {
+    this.localHostUrl = `http://localhost:8080/api/v1`;
+  }
 
   createTransaction(transaction: Transaction, id: number): Observable<Transaction> {
     const properShares = transaction.shares;
@@ -24,15 +27,15 @@ export class TransactionService {
       });
     }
     transaction.userId = id;
-    return this.http.post<Transaction>(`${this.localHostUrl}/createTransaction`, transaction);
+    return this.http.post<Transaction>(`${this.awsUrl}/createTransaction`, transaction);
   }
 
   findAllTransactionsByUserId(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.localHostUrl}/getAllTransactions/${userId}`);
+    return this.http.get<any>(`${this.awsUrl}/getAllTransactions/${userId}`);
   }
 
   getAccountStatement(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.localHostUrl}/getStatement/${userId}`);
+    return this.http.get<any>(`${this.awsUrl}/getStatement/${userId}`);
   }
 
   // checkTransactionType(transaction: Transaction) {
