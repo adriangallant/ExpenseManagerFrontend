@@ -51,7 +51,9 @@
                             <td>
                               <button
                                 (click)="addFriend(user['id'])"
-                                [disabled]="loading || user['id'] === authenticationService.currentUserValue.id"
+                                [disabled]="loading ||
+                                            user['id'] === authenticationService.currentUserValue.id ||
+                                            checkFriendExistence(user['id'])"
                                 class="btn secondary-color-yellow-background text-white">
                                   <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                   Add

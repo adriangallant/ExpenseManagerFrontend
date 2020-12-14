@@ -20,6 +20,7 @@ export class AddFriendComponent implements OnInit {
   apiResponse: any;
   isSearching: boolean;
   loading: boolean;
+  existingFriends: any;
 
   constructor(
     private router: Router,
@@ -31,6 +32,7 @@ export class AddFriendComponent implements OnInit {
     this.isSearching = false;
     this.apiResponse = [];
     this.loading = false;
+    this.existingFriends = [];
   }
 
   ngOnInit(): void {
@@ -56,9 +58,32 @@ export class AddFriendComponent implements OnInit {
         console.log('error', err);
       });
     });
+
+    this.getExistingFriends();
   }
 
-  addFriend(friendId: number) {
+  getExistingFriends(): void{
+    this.friendService.getAllFriendsByUserId(this.authenticationService.currentUserValue.id)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.existingFriends = data;
+        },
+        error => {
+          this.alertService.error(error);
+        }
+      );
+  }
+
+  checkFriendExistence(resultId: number): boolean{
+    for ( const friend of this.existingFriends) {
+      if (friend.userId === resultId) {
+        return true;
+      }
+    }
+  }
+
+  addFriend(friendId: number): void{
     this.loading = true;
     const friend = new Friend({
       userId: this.authenticationService.currentUserValue.id,
@@ -69,6 +94,7 @@ export class AddFriendComponent implements OnInit {
       .subscribe(
         data => {
             alert('Friend added successfully!');
+            this.existingFriends.push({userId: friendId});
             this.loading = false;
         },
         error => {

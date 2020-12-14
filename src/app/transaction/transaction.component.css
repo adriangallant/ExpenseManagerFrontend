@@ -9,5 +9,17 @@
   padding: 2%;
 }
 
+.color-animation{
+  animation-name: changing-colors;
+  animation-duration: 4s;
+}
+
+@keyframes changing-colors{
+  0%   {color: red;}
+  25%  {color: orange;}
+  50%  {color: blue;}
+  100% {color: green;}
+}
+
 
 

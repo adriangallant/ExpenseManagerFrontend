@@ -25,6 +25,8 @@ export class TransactionComponent implements OnInit {
   submitted = false;
   friends: any[] = [];
   friendsSelect: any = [];
+  incomeDescription = 'This is money you recently spent and are requesting back.';
+  expenseDescription = 'This is money you are expected to pay back.';
 
   transactionTypes: TransactionType[] = [
     {value: 'Expense', viewValue: 'Expense'},
@@ -72,7 +74,7 @@ export class TransactionComponent implements OnInit {
     }
   }
 
-  get f(){return this.transactionForm.controls; }
+  get f(): any{ return this.transactionForm.controls; }
 
   onSubmit(): void{
     this.submitted = true;
