@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,6 +10,9 @@ export class AuthenticationService {
 
   private localHostUrl: string;
   private awsUrl = `http://expensemanagerbackend-env.eba-btazwimb.us-east-2.elasticbeanstalk.com/api/v1`;
+
+  authUsername = 'user';
+  authPassword = '123';
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
@@ -25,8 +28,8 @@ export class AuthenticationService {
   }
 
   login(username, password) {
-    //                        (${config.apiUrl}/users/authenticate)
-    return this.http.post<User>(`${this.awsUrl}/verify`, { username, password })
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUsername + ':' + this.authPassword)});
+    return this.http.post<User>(`${this.awsUrl}/verify`, { username, password}, {headers})
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user.id !== 0) { //  && user.token

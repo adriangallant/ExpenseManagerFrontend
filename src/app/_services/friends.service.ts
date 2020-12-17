@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {of} from 'rxjs';
 
 import {Friend} from '../_models/friend';
@@ -8,7 +8,8 @@ import {Friend} from '../_models/friend';
 export class FriendsService {
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
   private localHostUrl: string;
-
+  authUsername = 'user';
+  authPassword = '123';
 
   constructor(
     private http: HttpClient
@@ -23,14 +24,17 @@ export class FriendsService {
     if (term === '') {
       return of([]);
     }
-    return this.http.get<any>(`${this.awsUrl}/getAllUsers/${term}`); // { params: PARAMS.set('search', term) }
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUsername + ':' + this.authPassword)});
+    return this.http.get<any>(`${this.awsUrl}/getAllUsers/${term}`, {headers}); // { params: PARAMS.set('search', term) }
   }
 
-  addFriend(friend: Friend){
-    return this.http.post<Friend>(`${this.awsUrl}/addFriend`,  friend );
+  addFriend(friend: Friend): any{
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUsername + ':' + this.authPassword)});
+    return this.http.post<Friend>(`${this.awsUrl}/addFriend`,  friend, {headers});
   }
 
   getAllFriendsByUserId(userId: number): any{
-    return this.http.get<any>(`${this.awsUrl}/getAllFriends/${userId}`);
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUsername + ':' + this.authPassword)});
+    return this.http.get<any>(`${this.awsUrl}/getAllFriends/${userId}`, {headers});
   }
 }

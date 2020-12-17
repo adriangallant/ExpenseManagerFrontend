@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Transaction} from '../_models/transaction';
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +12,8 @@ export class TransactionService {
 
   private localHostUrl: string;
   private awsUrl = `http://expensemanagerbackend-env.eba-btazwimb.us-east-2.elasticbeanstalk.com/api/v1`;
-
+  authUsername = 'user';
+  authPassword = '123';
 
   constructor(private http: HttpClient) {
     this.localHostUrl = `http://localhost:8080/api/v1`;
@@ -27,15 +29,18 @@ export class TransactionService {
       });
     }
     transaction.userId = id;
-    return this.http.post<Transaction>(`${this.awsUrl}/createTransaction`, transaction);
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUsername + ':' + this.authPassword)});
+    return this.http.post<Transaction>(`${this.awsUrl}/createTransaction`, transaction, {headers});
   }
 
   findAllTransactionsByUserId(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.awsUrl}/getAllTransactions/${userId}`);
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUsername + ':' + this.authPassword)});
+    return this.http.get<any>(`${this.awsUrl}/getAllTransactions/${userId}`, {headers});
   }
 
   getAccountStatement(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.awsUrl}/getStatement/${userId}`);
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUsername + ':' + this.authPassword)});
+    return this.http.get<any>(`${this.awsUrl}/getStatement/${userId}`, {headers});
   }
 
   // checkTransactionType(transaction: Transaction) {

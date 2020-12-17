@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
+  {path: 'expenses', component: ExpensesComponent},     // , canActivate: [AuthGuard]
   {path: 'transaction', component: TransactionComponent, canActivate: [AuthGuard] },
   {path: 'friends', component: FriendsComponent, canActivate: [AuthGuard] },
   {path: 'add-friend', component: AddFriendComponent, canActivate: [AuthGuard] },
